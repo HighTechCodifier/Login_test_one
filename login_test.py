@@ -10,10 +10,10 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service as ChromeService
 from webdriver_manager.chrome import ChromeDriverManager
 
-import page_URL
-import main_page
-import login_page
-import maintenance_login_page
+from page_URL import url
+from main_page import MainPage
+from login_page import LoginPage
+from maintenance_login_page import MaintenanceLoginPage
 
 
 class LoginTest(unittest.TestCase):
@@ -41,6 +41,8 @@ class LoginTest(unittest.TestCase):
         # Pass an instance of the Service class to the Chrome class:
         cls.driver = webdriver.Chrome(service=ChromeService(
             ChromeDriverManager().install()))
+
+        # cls.driver = webdriver.Chrome(executable_path=r"C:\Users\User\Desktop\chromedriver")
 
         """
         Tell the webdriver to Wait maximum a certain
@@ -71,7 +73,7 @@ class LoginTest(unittest.TestCase):
         """
 
         # Open webpage:
-        self.driver.get(page_URL.url)
+        self.driver.get(url)
 
         # Read actual page-title of the page:
         actual_title = self.driver.title
@@ -96,7 +98,7 @@ class LoginTest(unittest.TestCase):
         """
 
         # Create an object in the class Login:
-        login_page_object = login_page.LoginPage(self.driver)
+        login_page_object = LoginPage(self.driver)
 
         # Login to the page using "Invalid" credentials:
         login_page_object.login_to_page_with_invalid_credentials()
@@ -136,11 +138,11 @@ class LoginTest(unittest.TestCase):
         # self.login_to_page()
 
         # Create an object in the class Login:
-        login_page_object = login_page.LoginPage(self.driver)
+        login_page_object = LoginPage(self.driver)
         login_page_object.login_to_page_with_valid_credentials()
 
         # Create an object in the class MainPage:
-        main_page_object = main_page.MainPage(self.driver)
+        main_page_object = MainPage(self.driver)
 
         main_page_object.check_validity_of_main_page()
 
@@ -168,7 +170,7 @@ class LoginTest(unittest.TestCase):
         """
 
         # Create an object in the class MainPage:
-        main_page_object = main_page.MainPage(self.driver)
+        main_page_object = MainPage(self.driver)
 
         actual_value = main_page_object.get_maintenance_text()
 
@@ -181,7 +183,7 @@ class LoginTest(unittest.TestCase):
         main_page_object.switch_to_maintenance_page()
 
         # Create an object in the class MaintenanceLoginPage:
-        maintenance_page_object = maintenance_login_page.MaintenanceLoginPage(self.driver)
+        maintenance_page_object = MaintenanceLoginPage(self.driver)
 
         # ASSERTION:
         actual_value = maintenance_page_object. \
@@ -211,13 +213,13 @@ class LoginTest(unittest.TestCase):
         """
 
         # Create an object in the class MainPage:
-        main_page_object = main_page.MainPage(self.driver)
+        main_page_object = MainPage(self.driver)
 
         main_page_object.click_on_user_drop_down_button()
         main_page_object.click_on_logout_button()
 
         # Create an object in the class Login:
-        login_page_object = login_page.LoginPage(self.driver)
+        login_page_object = LoginPage(self.driver)
 
         # ASSERTION:
         # Find the Login-text on login page:
